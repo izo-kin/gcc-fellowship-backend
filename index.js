@@ -1,7 +1,6 @@
 // index.js
 const express = require("express");
 const admin = require("firebase-admin");
-const serviceAccount = require("./serviceAccountKey.json");
 const { Parser } = require("json2csv"); // for CSV export
 const PDFDocument = require("pdfkit");   // for PDF export
 const stream = require("stream");
@@ -13,6 +12,9 @@ admin.initializeApp({
 const db = admin.firestore();
 const app = express();
 app.use(express.json());
+
+// Load service account credentials from environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_KEY);
 
 // ===== Health Check =====
 app.get("/", (req, res) => res.send("GCC Fellowship Backend is running ✅"));
